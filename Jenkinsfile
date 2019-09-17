@@ -1,8 +1,13 @@
- 
+import hudson.model.*
 import groovy.json.JsonSlurper
 def BuildVersion
 def Current_version
 def NextVersion
+import hudson.FilePath
+import hudson.model.Node
+import hudson.model.Slave
+import jenkins.model.Jenkins
+import groovy.time.*
  pipeline {
 
      options {
@@ -86,15 +91,20 @@ def NextVersion
          stage('Triggering E2E-CI job'){
             
              steps{
-                script{
-                    build job: 'E2E-CI', parameters: [ string(name: 'triggered_by', value: 'intapi'), string(name:'next_version', value: NextVersion), string(name: 'Image_version', value: 'intdb' + BuildVersion)]   
+                script {
+                    node('master') {
+                    build job: 'E2E-CI', parameters: [string(name: 'triggered_by', value: 'intdb'), string(name: 'next_version', value: NextVersion), string(name: 'Image_version', value: 'db_' + BuildVersion)]
+                }
+
+                    }
+
+
                 }
             }
 
         }
 
      }
- }
 def Return_Json_From_File(file_name){
     return new JsonSlurper().parse(new File(file_name))
 }
