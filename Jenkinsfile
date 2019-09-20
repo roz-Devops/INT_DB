@@ -13,6 +13,10 @@ import groovy.time.*
      options {
          timeout(time: 30, unit: 'MINUTES')
      }
+    environment {
+    registry = "rozdockerforever/dev"
+    registryCredential = 'dockerhub'
+    //dock
      agent { label 'slave' }
      stages {
          stage('Checkout') {
@@ -21,7 +25,7 @@ import groovy.time.*
                      node('master'){
                          dir('Release') {
                              deleteDir()
-                             checkout([$class: 'GitSCM', branches: [[name: 'Prod']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/intclassproject/Release.git"]]])
+                             checkout([$class: 'GitSCM', branches: [[name: 'Prod']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-roz', url: "https://github.com/roz-Devops/Release.git"]]])
                              path_json_file = sh(script: "pwd", returnStdout: true).trim() + '/' + 'Prod' + '.json'
                              Current_version = Return_Json_From_File("$path_json_file").release.services.intapi.version
                              echo("Current_version Is in master: ${Current_version}")
@@ -30,7 +34,7 @@ import groovy.time.*
                      
                      dir('INT_DB') {
                          deleteDir()
-                         checkout([$class: 'GitSCM', branches: [[name: 'Dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-cred-id', url: "https://github.com/intclassproject/INT_DB.git"]]])
+                         checkout([$class: 'GitSCM', branches: [[name: 'Dev']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-roz', url: "https://github.com/roz-Devops/INT_DB.git"]]])
                          Commit_Id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                          BuildVersion = Current_version + '_' + Commit_Id
                          last_digit_current_version = sh(script: "echo $Current_version | cut -d'.' -f3", returnStdout: true).trim()
@@ -59,7 +63,7 @@ import groovy.time.*
                          catch (exception) {
                              println "Docker image build failed"
                              currentBuild.result = 'FAILURE'
-                             throw exception
+              
                          }
 
                      }
@@ -75,15 +79,14 @@ import groovy.time.*
                      try{
                          withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                                 sh "docker login -u=${DOCKER_USERNAME} -p=${DOCKER_PASSWORD}"
-                                sh "docker tag db:$BuildVersion devopsint/dev:db_$BuildVersion"
-                                sh "docker push devopsint/dev:db_$BuildVersion"
+                                sh "docker tag db:$BuildVersion $registry/dev:db_$BuildVersion"
+                                sh "docker push $registry:db_$BuildVersion"
                                 
                          }
                          }
                      catch (exception){
                          println "The image pushing to dockehub failed"
                          currentBuild.result = 'FAILURE'
-                         throw exception
                      }
                  }
              }
