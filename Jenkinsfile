@@ -16,7 +16,7 @@ import groovy.time.*
     environment {
     registry = "rozdockerforever/dev"
     registryCredential = 'dockerhub'
-    //dock
+    }
      agent { label 'slave' }
      stages {
          stage('Checkout') {
