@@ -80,7 +80,8 @@ import groovy.time.*
                      sh 'ls'
                      sh 'pwd'  
                      sh 'echo ${Commit_Id}'
-                         sh ''' $(cat README.md | head -1):${Commit_Id} && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'''
+                     sh '$Commit_Id'
+                         sh ''' $(cat README.md | head -1)+':' + Commit_Id && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'''
                        
                      }
                    }
