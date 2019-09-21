@@ -80,7 +80,7 @@ import groovy.time.*
                      sh 'ls'
                      sh 'pwd'  
                      sh "echo ${Commit_Id}"
-                     sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion"
+                    // sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion"
                  //    exit_code = sh(script: "docker inspect mongodb --format='{{.State.ExitCode}}'")
                    //  echo("exit_code: ${exit_code} ")
                           //        if (sh(script: "docker inspect mongodb --format='{{.State.ExitCode}}'") -eq 0){
@@ -89,7 +89,7 @@ import groovy.time.*
                               //      }else{
                                  //    exit 1;
                               //      }
-                 bash -c "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion; if [ "\$?" == 0 ]; then exit 0; else exit 1; fi"
+                 bash -c sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion; if [ "\$?" == 0 ]; then exit 0; else exit 1; fi"
 
                  //    sh 'if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'
                      }
