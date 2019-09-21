@@ -3,6 +3,7 @@ import groovy.json.JsonSlurper
 def BuildVersion
 def Current_version
 def NextVersion
+def Commit_Id
 import hudson.FilePath
 import hudson.model.Node
 import hudson.model.Slave
@@ -79,7 +80,7 @@ import groovy.time.*
                      sh 'ls'
                      sh 'pwd'  
                      sh '${Commit_Id}'
-                         sh ''' $(cat README.md | head -1): + "${Commit_Id}" && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'''
+                         sh ''' $(cat README.md | head -1):${Commit_Id} && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'''
                        
                      }
                    }
