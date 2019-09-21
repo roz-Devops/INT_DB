@@ -91,7 +91,7 @@ import groovy.time.*
              steps{
                  script{
                      try{
-                         withCredentials([usernamePassword(credentialsId: 'docker-cred-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                         withCredentials([usernamePassword(credentialsId: 'rozana_dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                                 sh "docker login -u=${DOCKER_USERNAME} -p=${DOCKER_PASSWORD}"
                                 sh "docker tag db:$BuildVersion $registry:db_$BuildVersion"
                                 sh "docker push $registry:db_$BuildVersion"
