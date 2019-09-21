@@ -81,6 +81,14 @@ import groovy.time.*
                      sh 'pwd'  
                      sh "echo ${Commit_Id}"
                      sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion"
+                     exit_code = sh(script: "docker inspect c2c769c4b9ef --format='{{.State.ExitCode}}' "
+                     sh" echo("exit_code: ${exit_code}")"
+                                    if(exit_code == 0){
+                                    echo "Launch SUCCESS"
+                                    sh'docker stop mongodb'
+                                    }else{
+                                     exit 1;
+                                    }
                      sh 'if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'
                      }
                    }
