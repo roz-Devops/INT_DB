@@ -83,14 +83,15 @@ import groovy.time.*
                      sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion"
                      def exit_code = sh(script: "docker inspect mongodb --format='{{.State.ExitCode}}'", returnStatus: true)
                      echo("exit_code: ${exit_code} ")
-                     if (echo("${exit_code}") == 0){
-                                       echo "Launch SUCCESS"
-                                       sh'docker stop mongodb'
-                                       exit 0;
-                                  }else{
-                                      echo "Failed"
-                                     exit 1;
-                                    }
+              //       if (echo("${exit_code}") == 0){
+                                   //    echo "Launch SUCCESS"
+                                   //    sh'docker stop mongodb'
+                                    //   exit 0;
+                              //    }else{
+                                  //    echo "Failed"
+                                  //   exit 1;
+                                //    }
+                 sh " sudo $(cat README.md | head -1):${$BuildVersion} && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi"
              //    bash -c sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion; if [ "\$?" == 0 ]; then exit 0; else exit 1; fi"
 
                  //    sh 'if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'
