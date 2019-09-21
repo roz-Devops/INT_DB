@@ -76,8 +76,11 @@ import groovy.time.*
         stage('Test the container is runnable') {
             steps {
                 script {
+                     sh 'ls'
+                       dir('INT_DB') {
                          sh ''' $(cat README.md | head -1):\${Commit_Id} && if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'''
                        }
+                     }
                    }
          }
          stage('Push image to repository'){
