@@ -100,9 +100,9 @@ import groovy.time.*
               //     } finally {
                 //      sh'docker stop mongodb'
                //     }
+                 //$? -eq 0 || 
                  
-                 
-               sh ''' if [[ $? -eq 0 ||  docker inspect mongodb --filter status=running ]]; then echo 'Launch SUCCESS';
+               sh ''' if [[ docker inspect mongodb --filter status=running ]]; then echo 'Launch SUCCESS';
                   fi'''
                  
                 
