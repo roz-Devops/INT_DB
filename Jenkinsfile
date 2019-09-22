@@ -103,8 +103,7 @@ import groovy.time.*
                  
                  
                sh ''' if [[ $? -eq 0 ]]; then
-                     echo "Launch SUCCESS" &&
-                     docker stop mongodb; 
+                     echo "Launch SUCCESS"; 
                      else exit 1;
                   fi'''
              //    bash -c sh "sudo docker run -d -p 27017:27017 --name mongodb db:$BuildVersion; if [ "\$?" == 0 ]; then exit 0; else exit 1; fi"
