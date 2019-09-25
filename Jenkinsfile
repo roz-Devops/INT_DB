@@ -104,7 +104,7 @@ import groovy.time.*
                //     }
                  //$? -eq 0 || 
                  
-               sh ''' if [ $exit_code -eq 0 ]; then echo 'Launch SUCCESS';
+               sh ''' if [[ $exit_code -eq 0 ]]; then echo 'Launch SUCCESS';
                   fi'''
        //        sh ''' if ! $(exit $exit_code); then
              //         echo "some_command failed"
@@ -155,3 +155,4 @@ import groovy.time.*
 def Return_Json_From_File(file_name){
     return new JsonSlurper().parse(new File(file_name))
 }
+
