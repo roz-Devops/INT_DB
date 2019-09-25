@@ -75,6 +75,7 @@ import groovy.time.*
              }
          }
         stage('Test the container is runnable') {
+         dir('INT_DB') {
             steps {
                 script {
                      sh 'ls'
@@ -112,8 +113,9 @@ import groovy.time.*
 
                  //    sh 'if [ ?$ -eq 0 ]; then echo 'Launch SUCCESS' && docker stop mongodb; else exit 1; fi'
                      }
-                   }
-         }
+                 }
+             }
+        }
          stage('Push image to repository'){
              steps{
                  script{
