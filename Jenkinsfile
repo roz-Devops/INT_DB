@@ -1,3 +1,4 @@
+
 import hudson.model.*
 import groovy.json.JsonSlurper
 def BuildVersion
@@ -75,9 +76,9 @@ import groovy.time.*
              }
          }
         stage('Test the container is runnable') {
-         dir('INT_DB') {
             steps {
                 script {
+                     dir('INT_DB') {
                      sh 'ls'
                      sh 'pwd'  
                      sh "echo ${Commit_Id}"
