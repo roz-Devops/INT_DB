@@ -104,7 +104,7 @@ import groovy.time.*
                //     }
                  //$? -eq 0 || 
                  
-                      sh "if[ ${exit_code} ]; then echo 'Launch SUCCESS'; else echo 'gadi'; fi"
+                     if[ ${exit_code} ]; then echo 'Launch SUCCESS'; else echo 'gadi'; fi
        //        sh ''' if ! $(exit $exit_code); then
              //         echo "some_command failed"
               //    fi'''
