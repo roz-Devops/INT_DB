@@ -8,7 +8,7 @@ agent { label 'docker' }
   stage('Checkout') {
    steps {
     script {
-     checkout([$class: 'GitSCM', branches: [[name: '*/yuri']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/intclassproject/INT_DB.git']]])
+     checkout([$class: 'GitSCM', branches: [[name: '*/yuri']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_rd_cred', url: 'https://github.com/roz-Devops/INT_DB.git']]])
       Commit_Id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
     }
    }
